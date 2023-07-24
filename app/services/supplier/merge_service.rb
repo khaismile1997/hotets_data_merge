@@ -88,7 +88,7 @@ class Supplier::MergeService < Supplier::BaseService
   end
 
   def format_location_address(address, postal_code)
-    address.include?(postal_code) ? address&.strip : "#{address&.strip}, #{postal_code}"
+    address.include?(postal_code) ? address : "#{address}, #{postal_code}"
   end
 
   def handle_merge_images(merged_hotel, sup2_imgs, sup3_imgs)

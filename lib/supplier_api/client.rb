@@ -15,15 +15,29 @@ module SupplierApi
 
       def handle_response(response, is_json: true)
         begin
-          body = response.body.force_encoding('utf-8')
+          body = response.body
+          cleaned_data = clean_data(JSON.parse(body))
           result = if is_json
-                    JSON.parse(body, object_class: OpenStruct)
+                    JSON.parse(cleaned_data.to_json, object_class: OpenStruct)
                   else
                     body
                   end
         rescue JSON::ParserError
-          puts "[handle response] Failed! Not perform parse json action"
+          puts "[Error handle response] Failed! Not perform parse json action"
           nil
+        end
+      end
+
+      def clean_data(data)
+        case data
+        when Hash
+          data.transform_values { |v| clean_data(v) }
+        when Array
+          data.map { |v| clean_data(v) }
+        when String
+          data.strip
+        else
+          data
         end
       end
 

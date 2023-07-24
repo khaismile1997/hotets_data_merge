@@ -1,0 +1,5 @@
+supplier_api:
+  base_url: <%= ENV["SUPPLIER_API_URL"] %>
+supplier:
+  size: 3
+  name: ['acme', 'patagonia', 'paperflies']

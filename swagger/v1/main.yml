@@ -1,0 +1,2 @@
+/v1/hotels:
+  $ref: "./swagger/v1/paths/hotels.yml"

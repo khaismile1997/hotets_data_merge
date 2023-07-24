@@ -1,0 +1,99 @@
+get:
+  tags:
+    - Hotels
+  summary: index hotels
+  responses:
+    200:
+      description: OK
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              type: object
+              required:
+                - id
+                - destination_id
+                - name
+                - location
+                - description
+                - amenities
+                - images
+                - booking_conditions
+              properties:
+                id:
+                  type: string
+                destination_id:
+                  type: number
+                name:
+                  type: string
+                location:
+                  type: object
+                  properties:
+                    lat:
+                      type: number
+                      nullable: true
+                    lng:
+                      type: number
+                      nullable: true
+                    address:
+                      type: string
+                    city:
+                      type: string
+                      nullable: true
+                    country:
+                      type: string
+                      nullable: true
+                description:
+                  type: string
+                amenities:
+                  type: array
+                  items:
+                    type: string
+                images:
+                  type: object
+                  required:
+                    - rooms
+                    - site
+                    - amenities
+                  properties:
+                    rooms:
+                      type: array
+                      items:
+                        type: object
+                        required:
+                          - link
+                          - description
+                        properties:
+                          link:
+                            type: string
+                          description:
+                            type: string
+                    site:
+                      type: array
+                      items:
+                        type: object
+                        required:
+                          - link
+                          - description
+                        properties:
+                          link:
+                            type: string
+                          description:
+                            type: string
+                    amenities:
+                      type: array
+                      items:
+                        type: object
+                        required:
+                          - link
+                          - description
+                        properties:
+                          link:
+                            type: string
+                          description:
+                            type: string
+                booking_conditions:
+                  type: array
+                  items:
+                    type: string

@@ -16,19 +16,19 @@ class Supplier::MergeService < Supplier::BaseService
       sup3 = hotel_data_group[:supplier3] || OpenStruct.new
       
       merged_hotel[:id]                 = sup1.Id || sup2.id || sup3.hotel_id
-      merged_hotel[:destination_id]     = sup1.DestinationId || sup2.description || sup3.destination_id
+      merged_hotel[:destination_id]     = sup1.DestinationId || sup2.destination || sup3.destination_id
       merged_hotel[:name]               = sup1.Name || sup2.name || sup3.hotel_name
       merged_hotel[:location][:lat]     = sup1.Latitude.presence || sup2.lat.presence
       merged_hotel[:location][:lng]     = sup1.Longitude.presence || sup2.lng.presence
-      merged_hotel[:location][:address] = sup2.address || format_location_address(sup1.Address, sup1.PostalCode)
-      merged_hotel[:location][:city]    = sup1.City || sup3.location&.country
-      merged_hotel[:location][:country] = sup1.Country
-      merged_hotel[:description]        = sup3.details || sup1.Description
-      merged_hotel[:amenities]          = sup3.amenities&.general + sup3.amenities&.room || sup2.amenities || sup1.Facilities
+      merged_hotel[:location][:address] = sup2.address.presence || format_location_address(sup1.Address, sup1.PostalCode)
+      merged_hotel[:location][:city]    = sup1.City.presence || sup3.location&.country.presence
+      merged_hotel[:location][:country] = sup1.Country.presence
+      merged_hotel[:description]        = sup3.details.presence || sup1.Description.presence
+      merged_hotel[:amenities]          = (sup3.amenities&.general + sup3.amenities&.room).presence || sup2.amenities.presence || sup1.Facilities.presence || []
 
       handle_merge_images(merged_hotel, sup2.images, sup3.images)
 
-      merged_hotel[:booking_conditions] = sup3.booking_conditions
+      merged_hotel[:booking_conditions] = sup3.booking_conditions || []
 
       merged_data << merged_hotel
     end

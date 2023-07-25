@@ -38,6 +38,7 @@ get:
                       nullable: true
                     address:
                       type: string
+                      nullable: true
                     city:
                       type: string
                       nullable: true
@@ -46,6 +47,7 @@ get:
                       nullable: true
                 description:
                   type: string
+                  nullable: true
                 amenities:
                   type: array
                   items:
